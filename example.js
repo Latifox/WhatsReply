@@ -52,6 +52,31 @@ client.on('ready', async () => {
         console.log('Page error: ' + err.toString());
     });
     
+    // Send a template message with "hello world" when the client is ready
+    try {
+        // Get your own number
+        const info = client.info;
+        const myNumber = info.wid.user;
+        const chatId = `${myNumber}@c.us`;
+
+        // Create a template-like message using Buttons
+        const button = new Buttons(
+            'Hello World', 
+            [
+                { body: 'Reply' },
+                { body: 'Share' },
+                { body: 'More Info' }
+            ], 
+            'Template Message Example', 
+            'Sent using whatsapp-web.js'
+        );
+
+        // Send the template message to yourself
+        await client.sendMessage(chatId, button);
+        console.log('Template message sent successfully');
+    } catch (error) {
+        console.error('Failed to send template message:', error);
+    }
 });
 
 client.on('message', async msg => {
